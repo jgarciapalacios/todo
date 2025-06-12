@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useLocalTasks } from "./useLocalTasks";
 import "./App.css";
 import { TaskEntry } from "./components/Task";
 import {
@@ -9,14 +9,13 @@ import {
   updateTaskCompletionStatus,
   createNewTask,
 } from "./utils";
-import { v4 as uuidv4 } from "uuid";
 import { mockTask } from "./mock";
 import { Button, IconButton } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
-const DEFAULT_TASKS = [mockTask];
+const DEFAULT_TASKS: Task[] = [];
 function App() {
-  const [tasks, setTasks] = useState<Task[]>(DEFAULT_TASKS);
+  const { tasks, setTasks } = useLocalTasks(DEFAULT_TASKS);
 
   const handleAddTask = (parentId: string, text: string) => {
     const newTask: Task = createNewTask(text);
@@ -25,8 +24,14 @@ function App() {
   };
 
   const handleDeleteTask = (taskId: string) => {
-    const updatedTasks = deleteTaskFromTree(tasks, taskId);
-    setTasks(updatedTasks);
+    if (tasks.length <= 1 && tasks[0]?.id === taskId)
+      return window.alert("You must have at least 1 task!");
+
+    setTasks((oldTasks) => {
+      const updatedTasks = deleteTaskFromTree(oldTasks, taskId);
+      console.log("updatedTasks", updatedTasks);
+      return updatedTasks;
+    });
   };
 
   const handleReplaceTask = (id: string, updatedTask: Task) => {
@@ -40,10 +45,11 @@ function App() {
   return (
     <div className="App">
       <div className="homepage">
-        <h1> TRACK YOUR GOALS </h1>
+        <h1> Track Your Goals! </h1>
         <div className="tasklist">
           {tasks.map((task) => (
             <TaskEntry
+              key={task.id}
               task={task}
               handleAddTask={handleAddTask}
               handleDeleteTask={handleDeleteTask}

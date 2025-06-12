@@ -101,6 +101,7 @@ export const TaskEntry = (props: TaskEntryProps) => {
       {task.subtasks.length !== 0 && (
         <LinearProgressWithLabel
           value={getTaskProgress(task)}
+          color="success"
           style={{ height: "8px" }}
         />
       )}
