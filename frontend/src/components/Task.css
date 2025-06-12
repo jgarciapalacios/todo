@@ -1,0 +1,48 @@
+* {
+  /* outline: red solid 1px; */
+}
+
+.task-top-container {
+  border-radius: 8px;
+  padding: 0 2em;
+}
+
+/* Task Entry */
+.task-entry-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-text {
+  margin: 0;
+  text-align: left;
+  font-size: 2em;
+  font-weight: 100;
+  margin-bottom: 0.5em;
+}
+
+.task-progress-bar {
+  width: 80%;
+  height: 2em;
+}
+
+/* Sub Tasks */
+.subtasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.subtask-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.subtask-number {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 100;
+  min-width: 1em;
+}
+
+.task-hover-bar {
+  min-height: 1em;
+}
